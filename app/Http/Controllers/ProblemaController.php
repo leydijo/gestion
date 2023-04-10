@@ -35,13 +35,10 @@ class ProblemaController extends Controller
     public function create()
     {
         $clientes = Cliente::all()->pluck('nombre', 'id');
-        $plataformas = Plataforma::all()->pluck('nombre', 'id');
-       // return view('problemas.crear', compact('clientes','plataformas'));
-        return view('problemas.crear')
-        ->with([
-            'clientes' => $clientes,
-            'plataformas' => $plataformas
-        ]);
+        $plataformas = Plataforma::all();
+        
+        return view('problemas.crear', compact('clientes','plataformas'));
+       
     }
 
     /**
