@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Plataforma;
-use App\Models\Cliente;
 
-class PlataformaController extends Controller
+class ProblemaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +13,7 @@ class PlataformaController extends Controller
      */
     public function index()
     {
-        $plataformas = Plataforma::with('cliente')->paginate(5);
-        return view('plataforma.index',compact('plataformas'));
-
+        //
     }
 
     /**
@@ -27,9 +23,7 @@ class PlataformaController extends Controller
      */
     public function create()
     {
-        $clientes = Cliente::all()->pluck('nombre', 'id');
-        return view('plataforma.crear', compact('clientes'));
-        return view('plataforma.crear');
+        //
     }
 
     /**
@@ -40,16 +34,7 @@ class PlataformaController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
-            'nombre' => 'required',
-            'url' => 'required',
-            'cliente_id'=>'required'
-           
-        ]);
-    
-        Plataforma::create($request->all());
-    
-        return redirect()->route('plataformas.index');
+        //
     }
 
     /**
@@ -92,10 +77,8 @@ class PlataformaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy( Plataforma $plataforma)
+    public function destroy($id)
     {
-        $plataforma->delete();
-    
-        return redirect()->route('plataformas.index');
+        //
     }
 }

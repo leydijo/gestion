@@ -37,4 +37,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('blogs', BlogController::class);
     Route::resource('clientes', ClienteController::class);
     Route::resource('plataformas', PlataformaController::class);
+    Route::resource('problemas', ProblemaController::class);
 });
