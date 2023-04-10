@@ -38,9 +38,9 @@
                               </tbody>
                             </table>
                             <!-- Centramos la paginacion a la derecha -->
-                          <div class="pagination justify-content-end">
+                           <div class="pagination justify-content-end">
                             {!! $plataformas->links() !!}
-                          </div>     
+                        </div>    
                             
                       </div>
                   </div>

@@ -74,7 +74,7 @@
                                                  use App\Models\Problema;
                                                 $cant_problm = Problema::count();                                                
                                                 @endphp
-                                                <h2 class="text-right"><i class="fa fa-blog f-left"></i><span>{{$cant_clit}}</span></h2>
+                                                <h2 class="text-right"><i class="fa fa-blog f-left"></i><span>{{$cant_problm}}</span></h2>
                                                 <p class="m-b-0 text-right"><a href="{{ url('/problemas') }}" class="text-white">Ver más</a></p>
                                             </div>
                                         </div>

@@ -29,7 +29,7 @@ class PlataformaController extends Controller
     {
         $clientes = Cliente::all()->pluck('nombre', 'id');
         return view('plataforma.crear', compact('clientes'));
-        return view('plataforma.crear');
+        
     }
 
     /**

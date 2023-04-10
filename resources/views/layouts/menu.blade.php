@@ -14,4 +14,7 @@
     <a class="nav-link" href="{{ url('/clientes') }}">
         <i class=" fas fa-blog"></i><span>Clientes</span>
     </a>
+    <a class="nav-link" href="{{ url('/problemas') }}">
+        <i class=" fas fa-blog"></i><span>Problemas</span>
+    </a>
 </li>

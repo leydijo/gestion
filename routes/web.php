@@ -8,6 +8,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PlataformaController;
+use App\Http\Controllers\ProblemaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

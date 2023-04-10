@@ -3,9 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Problema;
+use App\Models\Cliente;
+use App\Models\Plataforma;
 
 class ProblemaController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:ver-problm|crear-problm|editar-problm|borrar-problm')->only('index');
+        $this->middleware('permission:crear-problm', ['only' => ['create','store']]);
+        $this->middleware('permission:editar-problm', ['only' => ['edit','update']]);
+        $this->middleware('permission:borrar-problm', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +23,8 @@ class ProblemaController extends Controller
      */
     public function index()
     {
-        //
+        $problemas = Problema::paginate(5);
+        return view('problemas.index',compact('problemas'));
     }
 
     /**
@@ -23,7 +34,14 @@ class ProblemaController extends Controller
      */
     public function create()
     {
-        //
+        $clientes = Cliente::all()->pluck('nombre', 'id');
+        $plataformas = Plataforma::all()->pluck('nombre', 'id');
+       // return view('problemas.crear', compact('clientes','plataformas'));
+        return view('problemas.crear')
+        ->with([
+            'clientes' => $clientes,
+            'plataformas' => $plataformas
+        ]);
     }
 
     /**
@@ -34,7 +52,17 @@ class ProblemaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'cliente_id' => 'required',
+            'plataforma_id' => 'required',
+            'descripcion' => 'required'
+           
+        ]);
+    
+        Problema::create($request->all());
+    
+        return redirect()->route('problemas.index');
+    
     }
 
     /**
@@ -77,8 +105,10 @@ class ProblemaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Problema $problema)
     {
-        //
+        $problema->delete();
+    
+        return redirect()->route('problemas.index');
     }
 }
