@@ -61,7 +61,11 @@
                                             {!! Form::textarea('descripcion', null, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
-
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            {!! Form::hidden('creado_por', auth()->user()->name()) !!}
+                                        </div>
+                                    </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                         <button type="submit" class="btn btn-primary">Guardar</button>
                                     </div>

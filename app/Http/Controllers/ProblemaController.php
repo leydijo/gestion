@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Problema;
 use App\Models\Cliente;
 use App\Models\Plataforma;
+use Carbon\Carbon;
 
 class ProblemaController extends Controller
 {
@@ -63,7 +64,7 @@ class ProblemaController extends Controller
         }
         
        $data= Problema::create($datos);
-        
+       
 
         return redirect()->route('problemas.index');
     
@@ -88,7 +89,9 @@ class ProblemaController extends Controller
      */
     public function edit($id)
     {
-        //
+       
+        $problemas = Problema::find($id);
+        return view('problemas.index',compact('problemas'));
     }
 
     /**
@@ -100,7 +103,16 @@ class ProblemaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'solucion' => 'required'
+        ]);
+
+        $problema = Problema::findOrFail($id);
+        
+        $data = $request->only(['solucion', 'solucionado_por','fecha_solucion']);
+    
+        $problema->update($data);
+        return redirect()->route('problemas.index');
     }
 
     /**
