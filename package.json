@@ -13,11 +13,12 @@
         "axios": "^0.21",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
-        "webpack": "^5.51.1"
+        "webpack": "^5.78.0"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.13.1",
         "bootstrap": "^4.0.0",
+        "chart.js": "^4.2.1",
         "datatables.net-dt": "^1.10.21",
         "izitoast": "^1.4.0",
         "jquery": "^3.2",

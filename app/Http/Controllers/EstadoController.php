@@ -11,6 +11,14 @@ use App\Models\Estado;
 
 class EstadoController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:ver-estado|crear-estado|editar-estado|borrar-estado')->only('index');
+        $this->middleware('permission:crear-estado', ['only' => ['create','store']]);
+        $this->middleware('permission:editar-estado', ['only' => ['edit','update']]);
+        $this->middleware('permission:borrar-estado', ['only' => ['destroy']]);
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,11 +26,9 @@ class EstadoController extends Controller
      */
     public function index()
     {
-        $cliente = EstadoPlataforma::with('cliente')->paginate(5);
-        $plataformas = EstadoPlataforma::with('plataforma','cliente','estado')->get();
-        
-        //dd($plataformas);
-        return view('estado.index',compact('cliente','plataformas'));
+
+        $plataformas = EstadoPlataforma::with('plataforma','cliente','estado')->paginate(5);
+        return view('estado.index',compact('plataformas'));
     }
 
     /**

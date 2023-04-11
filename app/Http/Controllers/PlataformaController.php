@@ -8,6 +8,13 @@ use App\Models\Cliente;
 
 class PlataformaController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:ver-plataforma|crear-plataforma|editar-plataforma|borrar-plataforma')->only('index');
+        $this->middleware('permission:crear-plataforma', ['only' => ['create','store']]);
+        $this->middleware('permission:editar-plataforma', ['only' => ['edit','update']]);
+        $this->middleware('permission:borrar-plataforma', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +23,16 @@ class PlataformaController extends Controller
     public function index()
     {
         $plataformas = Plataforma::with('cliente')->paginate(5);
-        return view('plataforma.index',compact('plataformas'));
+        $envios = Plataforma::all();
+        $data=[];
+
+        foreach ($envios as $envio) {
+            $data['label'][] = $envio->nombre;
+            $data['data'][] = $envio->id;
+        }
+        $data_json =json_encode($data);
+
+        return view('plataforma.index',compact('plataformas','data_json'));
 
     }
 

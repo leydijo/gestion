@@ -29,11 +29,26 @@ class SeederTablaPermisos extends Seeder
             'editar-cliente',
             'borrar-cliente',
 
-            //Operacions sobre tabla blogs
-            'ver-blog',
-            'crear-blog',
-            'editar-blog',
-            'borrar-blog'
+             //Operaciones sobre tabla problema
+             'ver-problema',
+             'crear-problema',
+             'editar-problema',
+             'borrar-problema',
+
+             //Operaciones sobre tabla estado
+             'ver-estado',
+             'crear-estado',
+             'editar-estado',
+             'borrar-estado',
+
+             //Operaciones sobre tabla plataforma
+             'ver-plataforma',
+             'crear-plataforma',
+             'editar-plataforma',
+             'borrar-plataforma',
+             
+
+            
         ];
 
         foreach($permisos as $permiso) {

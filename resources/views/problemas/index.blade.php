@@ -19,6 +19,7 @@
                                 <th style="color:#fff;">Descripción</th>
                                 <th style="color:#fff;">Imagen</th>
                                 <th style="color:#fff;">Solución</th>
+                                <th style="color:#fff;">Solucionado por</th>
                                 <th style="color:#fff;">Fecha creación</th>
                                 <th style="color:#fff;">Acciones</th>
 
@@ -27,12 +28,13 @@
                                 @foreach ($problemas as $problema)
                                   <tr>
                                     <td>{{ $problema->id }}</td>
-                                    <td>{{ $problema->creado_por }}</td>
+                                    <td>{{ auth()->user()->name() }}</td>
                                     <td>{{ $problema->plataforma->nombre }}</td>
                                     <td>{{$problema->cliente->nombre}}</td>
                                     <td>{{ $problema->descripcion }}</td>
                                     <td><img src="{{ asset('storage').'/'.$problema->img_error }}" width="100"></td>
                                     <td>{{ $problema->solucion }}</td>
+                                    <td>{{ auth()->user()->name() }}</td>
                                     <td>{{ $problema->fecha_creacion }}</td>
                                     <td>                                  
                                      {!! Form::open(['method' => 'DELETE','route' => ['problemas.destroy', $problema->id],'style'=>'display:inline']) !!}

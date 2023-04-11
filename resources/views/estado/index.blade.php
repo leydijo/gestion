@@ -22,32 +22,24 @@
 
                             </thead>
                             <tbody>
+
                                 @foreach ($plataformas as $plataforma)
                                     <tr>
                                         <td>{{ $plataforma->id }}</td>
-                                        <td>{{ $plataforma->creado_por }}</td>
+                                        <td>{{ auth()->user()->name() }}</td>
                                         <td>{{ $plataforma->plataforma->nombre }}</td>
                                         <td>{{ $plataforma->cliente->nombre }}</td>
                                         <td>{{ $plataforma->estado->nombre }}</td>
                                         <td>{{ $plataforma->fecha_creacion }}</td> 
-                                        {{-- <td>{{ $problema->id }}</td>
-                                    <td>{{ $problema->creado_por }}</td>
-                                    <td>{{ $problema->plataforma }}</td>
-                                    <td>{{$problema->cliente_id}}</td>
-                                    <td>{{ $problema->estado_id }}</td>
-                                    <td>{{ $problema->fecha_creacion }}</td>
-
-                                    <td>                                  
-                                     {!! Form::open(['method' => 'DELETE','route' => ['problemas.destroy', $problema->id],'style'=>'display:inline']) !!}
-                                          {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
-                                      {!! Form::close() !!}
-                                    </td> --}}
+                                        
                                     </tr>
                                 @endforeach
                             </tbody>
 
                         </table>
-
+                        <div class="pagination justify-content-end">
+                            {!! $plataformas->links() !!}
+                        </div>
 
                     </div>
                 </div>

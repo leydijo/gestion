@@ -11,10 +11,10 @@ class ProblemaController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-problm|crear-problm|editar-problm|borrar-problm')->only('index');
-        $this->middleware('permission:crear-problm', ['only' => ['create','store']]);
-        $this->middleware('permission:editar-problm', ['only' => ['edit','update']]);
-        $this->middleware('permission:borrar-problm', ['only' => ['destroy']]);
+        $this->middleware('permission:ver-problema|crear-problema|editar-problema|borrar-problema')->only('index');
+        $this->middleware('permission:crear-problema', ['only' => ['create','store']]);
+        $this->middleware('permission:editar-problema', ['only' => ['edit','update']]);
+        $this->middleware('permission:borrar-problema', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
