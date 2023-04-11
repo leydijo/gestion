@@ -54,12 +54,12 @@
                                                     Ingresar solución
                                                 </button>
 
-                                                {!! Form::open([
+                                                {{-- {!! Form::open([
                                                     'method' => 'DELETE',
                                                     'route' => ['problemas.destroy', $problem->id],
                                                     'style' => 'display:inline',
                                                 ]) !!}
-                                                {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
+                                                {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!} --}}
                                                 {!! Form::close() !!}
                                             </td>
                                         </tr>
@@ -76,7 +76,7 @@
             @php
                 $problemaId = $problems->isEmpty() ? null : $problems->first()->id;
             @endphp
-            <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade " id="exampleModal" tabindex="1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -88,7 +88,7 @@
                         </div>
                         <div class="modal-body">
 
-                            <form action="{{ route('problemas.update', ['problema' => '__PROBLEM_ID__']) }}"
+                            <form action="{{ route('problemas.update', $problemaId ) }}"
                                 method="POST">
                                 @csrf
                                 @method('PATCH')
@@ -118,7 +118,7 @@
                                 <input type="hidden" name="problema" id="problema-id" value="">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <button type="submit" class="btn btn-primary" data-dismiss="modal" data-backdrop="false">Guardar</button>
                                 </div>
 
                             </form>
@@ -129,13 +129,4 @@
             </div>
     </section>
 @endsection
-<script>
-    $('#exampleModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget);
-        var problemId = button.data('problem-id');
-        var form = $('#edit-form');
 
-        form.attr('action', form.attr('action').replace('__PROBLEM_ID__', problemId));
-        $('#problema-id').val(problemId);
-    });
-</script>
