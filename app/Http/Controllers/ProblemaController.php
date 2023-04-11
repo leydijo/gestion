@@ -24,10 +24,13 @@ class ProblemaController extends Controller
      */
     public function index()
     {
-        $problemas = Problema::with('cliente')->paginate(5);
-        $plataformas = Problema::with('plataforma')->paginate(5);
-    
-        return view('problemas.index',compact('problemas','plataformas'));
+        
+        $problems = Problema::with(['plataforma','cliente'])->get();
+          //dd($problems);
+        return view('problemas.index',compact('problems'));
+
+
+
     }
 
     /**
@@ -36,10 +39,11 @@ class ProblemaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        $clientes = Cliente::all()->pluck('nombre', 'id');
+     {
+        $clientes = Cliente::all();
         $plataformas = Plataforma::all();
-        
+        //$problema = Problema::with(['clientes','plataformas'])->get();
+        //dd($clientes);
         return view('problemas.crear', compact('clientes','plataformas'));
        
     }
@@ -90,8 +94,8 @@ class ProblemaController extends Controller
     public function edit($id)
     {
        
-        $problemas = Problema::find($id);
-        return view('problemas.index',compact('problemas'));
+        $editProblems = Problema::find($id);
+        return view('problemas.index',compact('editProblems'));
     }
 
     /**

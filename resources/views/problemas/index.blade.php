@@ -20,47 +20,108 @@
                                 <th style="color:#fff;">Imagen</th>
                                 <th style="color:#fff;">Solución</th>
                                 <th style="color:#fff;">Solucionado por</th>
-                                <th style="color:#fff;">Solucionado el</th>
+                                <th style="color:#fff;">Fecha solución</th>
                                 <th style="color:#fff;">Fecha creación</th>
                                 <th style="color:#fff;">Acciones</th>
 
                             </thead>
                             <tbody>
-                                @foreach ($problemas as $problema)
+                                @if ($problems->isEmpty())
                                     <tr>
-                                        <td>{{ $problema->id }}</td>
-                                        <td>{{ $problema->creado_por }}</td>
-                                        <td>{{ $problema->plataforma->nombre }}</td>
-                                        <td>{{ $problema->cliente->nombre }}</td>
-                                        <td>{{ $problema->descripcion }}</td>
-                                        <td><img src="{{ asset('storage') . '/' . $problema->img_error }}" width="100">
-                                        </td>
-                                        <td><button class="btn btn-primary">ver</button></td>
-                                        <td>{{ $problema->solucionado_por }}</td>
-                                        <td>{{ $problema->fecha_solucion }}</td>
-                                        <td>{{ $problema->fecha_creacion }}</td>
-                                        <td>
-
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#exampleModal">
-                                                Ingresar solución
-                                            </button>
-
-                                            {!! Form::open([
-                                                'method' => 'DELETE',
-                                                'route' => ['problemas.destroy', $problema->id],
-                                                'style' => 'display:inline',
-                                            ]) !!}
-                                            {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
-                                            {!! Form::close() !!}
+                                        <td class="center">
+                                            <p>No hay problemas registrados.</p>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @else
+                                    @foreach ($problems as $problem)
+                                        <tr>
+                                            <td>{{ $problem->id }}</td>
+                                            <td>{{ $problem->creado_por }}</td>
+                                            <td>{{ $problem->plataforma->nombre }}</td>
+                                            <td>{{ $problem->cliente->nombre }}</td>
+                                            <td>{{ $problem->descripcion }}</td>
+                                            <td><img src="{{ asset('storage') . '/' . $problem->img_error }}"
+                                                    width="100">
+                                            </td>
+                                            <td><button class="btn btn-primary">ver</button></td>
+                                            <td>{{ $problem->solucionado_por }}</td>
+                                            <td>{{ $problem->fecha_solucion }}</td>
+                                            <td>{{ $problem->fecha_creacion }}</td>
+                                            <td>
+
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#exampleModal" data-problem-id="{{ $problem->id }}">
+                                                    Ingresar solución
+                                                </button>
+
+                                                {!! Form::open([
+                                                    'method' => 'DELETE',
+                                                    'route' => ['problemas.destroy', $problem->id],
+                                                    'style' => 'display:inline',
+                                                ]) !!}
+                                                {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
+                                                {!! Form::close() !!}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
 
                         </table>
-                        <div class="pagination justify-content-end">
-                            {!! $problemas->links() !!}
+
+
+                    </div>
+                </div>
+            </div>
+            @php
+                $problemaId = $problems->isEmpty() ? null : $problems->first()->id;
+            @endphp
+            <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ingrese una solución</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <form action="{{ route('problemas.update', ['problema' => '__PROBLEM_ID__']) }}"
+                                method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="solucion">Solución</label>
+                                            {!! Form::textarea('solucion', null, ['class' => 'form-control']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12" hidden>
+                                        <div class="form-group">
+                                            {!! Form::text(
+                                                'solucionado_por',
+                                                auth()->user()->name(),
+                                                ['class' => 'form-control'],
+                                            ) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            {!! Form::hidden('fecha_solucion', \Carbon\Carbon::now()->format('Y-m-d H:i:s')) !!}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <input type="hidden" name="problema" id="problema-id" value="">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+
+                            </form>
                         </div>
 
                     </div>
@@ -68,50 +129,13 @@
             </div>
     </section>
 @endsection
+<script>
+    $('#exampleModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        var problemId = button.data('problem-id');
+        var form = $('#edit-form');
 
-@section('scripts')
-    <!-- Modal -->
-    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ingrese una solución</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    {!! Form::model($problema, ['method' => 'PATCH', 'route' => ['problemas.update', $problema->id]]) !!}
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <label for="solucion">Solución</label>
-                                {!! Form::textarea('solucion', null, ['class' => 'form-control']) !!}
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12" hidden>
-                            <div class="form-group">
-                                {!! Form::text(
-                                    'solucionado_por',
-                                    auth()->user()->name(),
-                                    ['class' => 'form-control'],
-                                ) !!}
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                {!! Form::hidden('fecha_solucion', \Carbon\Carbon::now()->format('Y-m-d H:i:s')) !!}
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
+        form.attr('action', form.attr('action').replace('__PROBLEM_ID__', problemId));
+        $('#problema-id').val(problemId);
+    });
+</script>

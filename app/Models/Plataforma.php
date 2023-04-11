@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Cliente;
-
+use App\Models\Problema;
 
 class Plataforma extends Model
 {
@@ -16,8 +16,11 @@ class Plataforma extends Model
 
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class);
+        return $this->belongsTo(Cliente::class,'id');
     }
-
+    public function problemas()
+    {
+        return $this->hasMany(Problema::class);
+    }
    
 }

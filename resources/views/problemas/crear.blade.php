@@ -27,14 +27,15 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
-                                        <label for="plataforma">Selecciona un cliente</label>
-                                        {!! Form::select('cliente_id', $clientes, null, [
-                                            'class' => 'form-control',
-                                            'id' => 'cliente_id',
-                                            'data-cliente-id' => $clientes->pluck('id')->first(),
-                                            'onchange' => 'actualizarPlataformas()',
-                                        ]) !!}
-
+                                        <label for="plataforma_id">Seleccione un cliente:</label>
+                                        <select name="cliente_id" selected="Selecciona un cliente" class="form-control"
+                                            id="cliente_id" onchange="actualizarPlataformas()">
+                                            @foreach ($clientes as $cliente)
+                                                <option value="{{ $cliente->id }}" data-cliente-id="{{ $cliente->id }}">
+                                                    {{ $cliente->nombre }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
@@ -63,7 +64,10 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                         <div class="form-group">
-                                            {!! Form::hidden('creado_por', auth()->user()->name()) !!}
+                                            {!! Form::hidden(
+                                                'creado_por',
+                                                auth()->user()->name(),
+                                            ) !!}
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12">
