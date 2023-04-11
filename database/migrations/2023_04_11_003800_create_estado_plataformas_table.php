@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEstadoPlataformaTable extends Migration
+class CreateEstadoPlataformasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateEstadoPlataformaTable extends Migration
      */
     public function up()
     {
-        Schema::create('estado_plataforma', function (Blueprint $table) {
+        Schema::create('estado_plataformas', function (Blueprint $table) {
             $table->id();
-            $table->string('estado');
-            $table->date('fecha_creacion');
-            $table->string('creado_por');
+            $table->string('estado')->nullable();
+            $table->timestamp('fecha_creacion')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->string('creado_por')->nullable();
             $table->unsignedBigInteger('cliente_id');
             $table->unsignedBigInteger('plataforma_id');
             $table->foreign('cliente_id')
@@ -39,6 +39,6 @@ class CreateEstadoPlataformaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estado_plataforma');
+        Schema::dropIfExists('estado_plataformas');
     }
 }

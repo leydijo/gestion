@@ -4,21 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
-use App\Models\Plataforma;
+use App\Models\Estado;
 use App\Models\Cliente;
+use App\Models\Plataforma;
 
-class Problema extends Model
+class EstadoPlataforma extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'descripcion','img_error','plataforma_id','fecha_creacion',
+        'estado_id','plataforma_id',
         'cliente_id','updated_at','created_at'
     ];
-   public function cliente()
+
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class, 'estado_id');
+    }
+
+    public function cliente()
     {
         return $this->belongsTo(Cliente::class);
     }
+
     public function plataforma()
     {
         return $this->belongsTo(Plataforma::class);

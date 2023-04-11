@@ -17,13 +17,13 @@ class CreateProblemasTable extends Migration
             $table->id();
             $table->string('descripcion')->nullable();
             $table->string('solucion')->nullable();
-            $table->date('fecha_creacion')->nullable(false)->change();
-            $table->date('fecha_solucion');
-            $table->string('img_error');
-            $table->string('creado_por');
-            $table->string('solucionado_por');
-            $table->unsignedBigInteger('plataforma_id');
-            $table->unsignedBigInteger('cliente_id');
+            $table->timestamp('fecha_creacion')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('fecha_solucion')->nullable()->default(null);
+            $table->string('img_error')->nullable();
+            $table->string('creado_por')->nullable();
+            $table->string('solucionado_por')->nullable();
+            $table->unsignedBigInteger('plataforma_id')->nullable();
+            $table->unsignedBigInteger('cliente_id')->nullable();
             $table->foreign('plataforma_id')
                 ->references('id')
                 ->on('plataformas')

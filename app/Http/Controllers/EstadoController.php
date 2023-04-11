@@ -6,16 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Problema;
 use App\Models\Cliente;
 use App\Models\Plataforma;
+use App\Models\EstadoPlataforma;
+use App\Models\Estado;
 
-class ProblemaController extends Controller
+class EstadoController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('permission:ver-problm|crear-problm|editar-problm|borrar-problm')->only('index');
-        $this->middleware('permission:crear-problm', ['only' => ['create','store']]);
-        $this->middleware('permission:editar-problm', ['only' => ['edit','update']]);
-        $this->middleware('permission:borrar-problm', ['only' => ['destroy']]);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -23,10 +18,11 @@ class ProblemaController extends Controller
      */
     public function index()
     {
-        $problemas = Problema::with('cliente')->paginate(5);
-        $plataformas = Problema::with('plataforma')->paginate(5);
-    
-        return view('problemas.index',compact('problemas','plataformas'));
+        $cliente = EstadoPlataforma::with('cliente')->paginate(5);
+        $plataformas = EstadoPlataforma::with('plataforma','cliente','estado')->get();
+        
+        //dd($plataformas);
+        return view('estado.index',compact('cliente','plataformas'));
     }
 
     /**
@@ -38,9 +34,9 @@ class ProblemaController extends Controller
     {
         $clientes = Cliente::all()->pluck('nombre', 'id');
         $plataformas = Plataforma::all();
-        
-        return view('problemas.crear', compact('clientes','plataformas'));
+        $estados = Estado::all()->pluck('nombre', 'id');
        
+        return view('estado.crear', compact('clientes','plataformas','estados'));
     }
 
     /**
@@ -54,19 +50,13 @@ class ProblemaController extends Controller
         request()->validate([
             'cliente_id' => 'required',
             'plataforma_id' => 'required',
-            'descripcion' => 'required'
+            'estado_id' => 'required'
            
         ]);
-        $datos = $request->except('_token');
-        if ($request->hasFile('img_error')) {
-            $datos['img_error'] = $request->file('img_error')->store('uploads','public');
-        }
-        
-       $data= Problema::create($datos);
-        
-
-        return redirect()->route('problemas.index');
+        //dd($request->all());
+        EstadoPlataforma::create($request->all());
     
+        return redirect()->route('estados.index');
     }
 
     /**
@@ -109,10 +99,8 @@ class ProblemaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Problema $problema)
+    public function destroy($id)
     {
-        $problema->delete();
-    
-        return redirect()->route('problemas.index');
+        //
     }
 }

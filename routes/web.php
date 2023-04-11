@@ -9,6 +9,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PlataformaController;
 use App\Http\Controllers\ProblemaController;
+use App\Http\Controllers\EstadoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,4 +40,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('clientes', ClienteController::class);
     Route::resource('plataformas', PlataformaController::class);
     Route::resource('problemas', ProblemaController::class);
+    Route::resource('estados', EstadoController::class);
 });

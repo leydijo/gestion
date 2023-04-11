@@ -16,15 +16,37 @@
                                 <th style="color:#fff;">Creado por</th>
                                 <th style="color:#fff;">Plataforma</th>
                                 <th style="color:#fff;">Cliente</th>
-                                <th style="color:#fff;">Description</th>
+                                <th style="color:#fff;">Descripción</th>
                                 <th style="color:#fff;">Imagen</th>
                                 <th style="color:#fff;">Solución</th>
                                 <th style="color:#fff;">Fecha creación</th>
+                                <th style="color:#fff;">Acciones</th>
 
                             </thead>
-                            
+                             <tbody>
+                                @foreach ($problemas as $problema)
+                                  <tr>
+                                    <td>{{ $problema->id }}</td>
+                                    <td>{{ $problema->creado_por }}</td>
+                                    <td>{{ $problema->plataforma->nombre }}</td>
+                                    <td>{{$problema->cliente->nombre}}</td>
+                                    <td>{{ $problema->descripcion }}</td>
+                                    <td><img src="{{ asset('storage').'/'.$problema->img_error }}" width="100"></td>
+                                    <td>{{ $problema->solucion }}</td>
+                                    <td>{{ $problema->fecha_creacion }}</td>
+                                    <td>                                  
+                                     {!! Form::open(['method' => 'DELETE','route' => ['problemas.destroy', $problema->id],'style'=>'display:inline']) !!}
+                                          {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
+                                      {!! Form::close() !!}
+                                    </td>
+                                  </tr>
+                                @endforeach
+                              </tbody>
+
                         </table>
-                        
+                        <div class="pagination justify-content-end">
+                            {!! $problemas->links() !!}
+                        </div>
 
                     </div>
                 </div>

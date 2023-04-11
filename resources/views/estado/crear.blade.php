@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Crear problemas</h3>
+            <h3 class="page__heading">Reportar estado de plataforma</h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -23,7 +23,7 @@
                                 </div>
                             @endif
 
-                            {!! Form::open(['route' => 'problemas.store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                            {!! Form::open(['route' => 'estados.store', 'method' => 'POST']) !!}
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
@@ -31,18 +31,11 @@
                                         {!! Form::select('cliente_id', $clientes, null, [
                                             'class' => 'form-control',
                                             'id' => 'cliente_id',
-                                            'data-cliente-id' => $clientes->pluck('id')->first(),
-                                            'onchange' => 'actualizarPlataformas()',
                                         ]) !!}
 
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <div class="form-group">
-                                        <label for="plataforma">Subir Imagen</label>
-                                        {!! Form::file('img_error', null, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
+
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label for="plataforma_id">Plataforma:</label>
@@ -57,8 +50,13 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                         <div class="form-group">
-                                            <label for="descripcion">Descripcion</label>
-                                            {!! Form::textarea('descripcion', null, ['class' => 'form-control']) !!}
+                                            <label for="estado_id">Selecciona un estado:</label>
+                                            <select name="estado_id" class="form-control">
+                                                @foreach ($estados as $id => $nombre)
+                                                    <option value="{{ $id }}">{{ $nombre }}</option>
+                                                @endforeach
+                                            </select>
+
                                         </div>
                                     </div>
 
@@ -74,28 +72,3 @@
             </div>
     </section>
 @endsection
-
-<script>
-    function actualizarPlataformas() {
-        let clienteId = document.getElementById("cliente_id").value;
-        let plataformaSelect = document.getElementById("plataforma_id");
-
-
-        for (var i = 0; i < plataformaSelect.options.length; i++) {
-            var opcion = plataformaSelect.options[i];
-
-            if (opcion.getAttribute("data-cliente-id") == clienteId) {
-                opcion.style.display = "";
-            } else {
-                opcion.style.display = "none";
-            }
-        }
-
-        // Actualizar el valor del campo de plataforma con la primera opción visible
-        var primeraOpcionVisible = plataformaSelect.querySelector("option:not([style*='none'])");
-        if (primeraOpcionVisible) {
-            plataformaSelect.value = primeraOpcionVisible.value;
-        }
-
-    }
-</script>
