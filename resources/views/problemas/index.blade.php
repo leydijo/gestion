@@ -88,8 +88,7 @@
                         </div>
                         <div class="modal-body">
 
-                            <form action="{{ route('problemas.update', $problemaId ) }}"
-                                method="POST">
+                            <form action="{{ route('problemas.update', $problemaId) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
                                 <div class="row">
@@ -118,7 +117,8 @@
                                 <input type="hidden" name="problema" id="problema-id" value="">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" data-dismiss="modal" data-backdrop="false">Guardar</button>
+                                    <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                                        data-backdrop="false">Guardar</button>
                                 </div>
 
                             </form>
@@ -127,6 +127,45 @@
                     </div>
                 </div>
             </div>
+            <div  style="display:block;width:50%;">
+                <h3>Graficas</h3>
+                <canvas id="myChart" style="display:block;width:100%; height:600px"></canvas>
+            </div>
     </section>
 @endsection
 
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            const ctx = document.getElementById('myChart')
+
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels:  {!! json_encode($descrip) !!},
+                    datasets: [{
+                        label: ' Top de Problemas',
+                        data:  {!! json_encode($data) !!},
+                        borderWidth: 1,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)'
+                    
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)'
+            
+                        ],
+                        
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+@endsection

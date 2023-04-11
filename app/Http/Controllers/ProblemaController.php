@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Problema;
 use App\Models\Cliente;
@@ -26,8 +27,22 @@ class ProblemaController extends Controller
     {
         
         $problems = Problema::with(['plataforma','cliente'])->get();
-          //dd($problems);
-        return view('problemas.index',compact('problems'));
+     
+
+        $topProblemas = Problema::select('problemas.id', 'problemas.descripcion', 'plataformas.nombre AS plataforma', 'clientes.nombre AS cliente', DB::raw('COUNT(problemas.id) AS total'))
+                            ->join('plataformas', 'problemas.plataforma_id', '=', 'plataformas.id')
+                            ->join('clientes', 'problemas.cliente_id', '=', 'clientes.id')
+                            ->groupBy('problemas.id')
+                            ->orderByDesc('total')
+                            ->take(10)
+                            ->get();
+        $descrip = $topProblemas->pluck('cliente')->toArray();
+        $data = $topProblemas->pluck('total')->toArray();
+        
+
+
+        return view('problemas.index', compact('problems','descrip', 'data'));
+
 
 
 
@@ -131,4 +146,22 @@ class ProblemaController extends Controller
     
         return redirect()->route('problemas.index');
     }
+
+    //GRaficos
+    public function topProblemas()
+    {
+        $topProblemas = Problema::select('problemas.id', 'problemas.descripcion', 'plataformas.nombre AS plataforma', 'clientes.nombre AS cliente', DB::raw('COUNT(problemas.id) AS total'))
+                            ->join('plataformas', 'problemas.plataforma_id', '=', 'plataformas.id')
+                            ->join('clientes', 'problemas.cliente_id', '=', 'clientes.id')
+                            ->groupBy('problemas.id')
+                            ->orderByDesc('total')
+                            ->take(10)
+                            ->get();
+        $descrip = $topProblemas->pluck('descripcion')->toArray();
+        dd($descrip);
+        $data = $topProblemas->pluck('total')->toArray();
+        
+        return view('problemas.index', compact('descrip', 'data'));
+    }
+
 }
