@@ -28,8 +28,9 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label for="plataforma_id">Seleccione un cliente:</label>
-                                        <select name="cliente_id" selected="Selecciona un cliente" class="form-control"
+                                        <select name="cliente_id" placeholder="Selecciona un cliente" selected="Selecciona un cliente" class="form-control"
                                             id="cliente_id" onchange="actualizarPlataformas()">
+                                            <option value="null">Seleccione un cliente</option>
                                             @foreach ($clientes as $cliente)
                                                 <option value="{{ $cliente->id }}" data-cliente-id="{{ $cliente->id }}">
                                                     {{ $cliente->nombre }}
@@ -55,6 +56,12 @@
                                                     {{ $plataforma->nombre }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="titulo">Titulo</label>
+                                            {!! Form::text('titulo', null, ['class' => 'form-control']) !!}
+                                        </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                         <div class="form-group">

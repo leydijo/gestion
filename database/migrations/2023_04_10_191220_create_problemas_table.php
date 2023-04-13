@@ -15,8 +15,9 @@ class CreateProblemasTable extends Migration
     {
         Schema::create('problemas', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion')->nullable();
-            $table->string('solucion')->nullable();
+            $table->string('titulo')->nullable();
+            $table->text('descripcion')->nullable();
+            $table->text('solucion')->nullable();
             $table->timestamp('fecha_creacion')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('fecha_solucion')->nullable()->default(null);
             $table->string('img_error')->nullable();

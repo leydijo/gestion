@@ -12,13 +12,13 @@ class EstadoPlataforma extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'estado_id','plataforma_id',
+        'id', 'estado_id','plataforma_id',
         'cliente_id','updated_at','created_at'
     ];
 
     public function estado()
     {
-        return $this->belongsTo(Estado::class, 'estado_id');
+        return $this->belongsTo(Estado::class);
     }
 
     public function cliente()

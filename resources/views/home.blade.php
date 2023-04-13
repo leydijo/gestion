@@ -11,9 +11,9 @@
                     <div class="card">
                         <div class="card-body">                          
                                 <div class="row">
-                                    <div class="col-md-4 col-xl-4">
+                                    {{-- <div class="col-md-4 col-xl-4"> --}}
                                     
-                                    <div class="card bg-c-blue order-card">
+                                    {{-- <div class="card bg-c-blue order-card">
                                             <div class="card-block">
                                             <h5>Usuarios</h5>                                               
                                                 @php
@@ -38,9 +38,9 @@
                                                 <p class="m-b-0 text-right"><a href="{{ url('/roles') }}" class="text-white">Ver más</a></p>
                                             </div>
                                         </div>
-                                    </div>                                                                
+                                    </div>                                                                 --}}
                                     
-                                    <div class="col-md-4 col-xl-4">
+                                    {{-- <div class="col-md-4 col-xl-4">
                                         <div class="card bg-c-pink order-card">
                                             <div class="card-block">
                                                 <h5>Plataformas</h5>                                               
@@ -52,8 +52,8 @@
                                                 <p class="m-b-0 text-right"><a href="{{ url('/plataformas') }}" class="text-white">Ver más</a></p>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4 col-xl-4">
+                                    </div> --}}
+                                    {{-- <div class="col-md-4 col-xl-4">
                                         <div class="card bg-c-pink order-card">
                                             <div class="card-block">
                                                 <h5>Clientes</h5>                                               
@@ -65,11 +65,36 @@
                                                 <p class="m-b-0 text-right"><a href="{{ url('/clientes') }}" class="text-white">Ver más</a></p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
+                                    <div class="col-md-4 col-xl-4">
+                                        <div class="card bg-c-grey">
+                                            <div class="card-block">
+                                                <h3>Plataformas caidas</h3>
+                                                <table id="plataformas" class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Cliente</th>
+                                                            <th>Plataforma</th>
+                                                            <th>Estado</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($resultados as $resultado)
+                                                        <tr>
+                                                            <td>{{ $resultado->nombreCliente }}</td>
+                                                            <td>{{ $resultado->nombrePlataforma }}</td>
+                                                            <td class="{{ $resultado->estado == 'Caido' ? 'text-danger blink' : '' }}">{{ $resultado->estado }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div> 
                                     <div class="col-md-4 col-xl-4">
                                         <div class="card bg-c-pink order-card">
                                             <div class="card-block">
-                                                <h5>Problemas</h5>                                               
+                                                <h5>Problemas y Solicitudes</h5>                                               
                                                 @php
                                                  use App\Models\Problema;
                                                 $cant_problm = Problema::count();                                                
@@ -82,7 +107,7 @@
                                     <div class="col-md-4 col-xl-4">
                                         <div class="card bg-c-pink order-card">
                                             <div class="card-block">
-                                                <h5>Estado</h5>                                               
+                                                <h5>Estado de plaformas</h5>                                               
                                                 @php
                                                  use App\Models\EstadoPlataforma;
                                                 $cant_status = EstadoPlataforma::count();                                                
@@ -95,6 +120,31 @@
 
                                 </div>                        
                         </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 col-xl-6">
+                                    <div class="card bg-c-grey">
+                                        <div class="card-block">
+                                            <h3>Top 10 Clientes</h3>
+                                            <canvas id="clientes" style="display:block;width:100%; height:600px"></canvas>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-md-4 col-xl-6">
+                                    <div class="card bg-c-grey">
+                                        <div class="card-block">
+                                            <h3>Top 10 Usuarios</h3>
+                                            <canvas id="usuarios" style="display:block;width:100%; height:600px"></canvas>
+                                        </div>
+                                    </div>
+                                </div> 
+
+                            </div>
+
+
+
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -102,3 +152,67 @@
     </section>
 @endsection
 
+@section('scripts')
+
+
+<script>
+    $(document).ready(function() {
+        const cData = JSON.parse(`<?php echo $data_json; ?>`)
+        console.log(cData);
+        const ctx = document.getElementById('clientes')
+
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: cData.label,
+                datasets: [{
+                    label: '# of Votes',
+                    data: cData.data,
+                    borderWidth: 1,
+                    backgroundColor: 'rgba(54,162,235,1)'
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        })
+    });
+
+    $(document).ready(function() {
+        const cData = JSON.parse(`<?php echo $data_json2; ?>`)
+        console.log(cData);
+        const ctx = document.getElementById('usuarios')
+
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: cData.label,
+                datasets: [{
+                    label: '# of Votes',
+                    data: cData.data,
+                    borderWidth: 1,
+                    backgroundColor: 'rgba(54,162,235,1)'
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        })
+    });
+
+    $(document).ready(function() {
+        setInterval(function() {
+            $('.blink').fadeOut(500).fadeIn(500);
+        }, 1000);
+    });
+
+</script>
+@endsection

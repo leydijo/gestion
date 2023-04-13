@@ -14,7 +14,7 @@ class ProblemaController extends Controller
     function __construct()
     {
         $this->middleware('permission:ver-problema|crear-problema|editar-problema|borrar-problema')->only('index');
-        $this->middleware('permission:crear-problema', ['only' => ['create','store']]);
+        $this->middleware('permission:crear-problema', ['only' => ['create','store'.'update']]);
         $this->middleware('permission:editar-problema', ['only' => ['edit','update']]);
         $this->middleware('permission:borrar-problema', ['only' => ['destroy']]);
     }
@@ -26,22 +26,22 @@ class ProblemaController extends Controller
     public function index()
     {
         
-        $problems = Problema::with(['plataforma','cliente'])->get();
+        $problems = Problema::with(['plataforma','cliente'])->paginate(10);
      
 
-        $topProblemas = Problema::select('problemas.id', 'problemas.descripcion', 'plataformas.nombre AS plataforma', 'clientes.nombre AS cliente', DB::raw('COUNT(problemas.id) AS total'))
-                            ->join('plataformas', 'problemas.plataforma_id', '=', 'plataformas.id')
-                            ->join('clientes', 'problemas.cliente_id', '=', 'clientes.id')
-                            ->groupBy('problemas.id')
-                            ->orderByDesc('total')
-                            ->take(10)
-                            ->get();
-        $descrip = $topProblemas->pluck('cliente')->toArray();
-        $data = $topProblemas->pluck('total')->toArray();
+        // $topProblemas = Problema::select('problemas.id', 'problemas.descripcion', 'plataformas.nombre AS plataforma', 'clientes.nombre AS cliente', DB::raw('COUNT(problemas.id) AS total'))
+        //                     ->join('plataformas', 'problemas.plataforma_id', '=', 'plataformas.id')
+        //                     ->join('clientes', 'problemas.cliente_id', '=', 'clientes.id')
+        //                     ->groupBy('problemas.id')
+        //                     ->orderByDesc('total')
+        //                     ->take(10)
+        //                     ->get();
+        // $descrip = $topProblemas->pluck('cliente')->toArray();
+        // $data = $topProblemas->pluck('total')->toArray();
         
 
 
-        return view('problemas.index', compact('problems','descrip', 'data'));
+        return view('problemas.index', compact('problems'));
 
 
 
@@ -74,6 +74,7 @@ class ProblemaController extends Controller
         request()->validate([
             'cliente_id' => 'required',
             'plataforma_id' => 'required',
+            'titulo' => 'required',
             'descripcion' => 'required'
            
         ]);
@@ -128,7 +129,7 @@ class ProblemaController extends Controller
 
         $problema = Problema::findOrFail($id);
         
-        $data = $request->only(['solucion', 'solucionado_por','fecha_solucion']);
+        $data = $request->only(['solucion', 'solucionado_por','fecha_solucion','titulo','descripcion']);
     
         $problema->update($data);
         return redirect()->route('problemas.index');

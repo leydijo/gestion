@@ -27,7 +27,7 @@ class EstadoController extends Controller
     public function index()
     {
 
-        $plataformas = EstadoPlataforma::with('plataforma','cliente','estado')->paginate(5);
+        $plataformas = EstadoPlataforma::with('plataforma','cliente','estado')->paginate(10);
         return view('estado.index',compact('plataformas'));
     }
 

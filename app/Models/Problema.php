@@ -12,7 +12,7 @@ class Problema extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id','descripcion','img_error','plataforma_id','fecha_creacion','fecha_solucion','solucion','creado_por',
+        'id', 'titulo', 'descripcion','img_error','plataforma_id','fecha_creacion','fecha_solucion','solucion','creado_por',
         'solucionado_por','cliente_id','updated_at','created_at'
     ];
 

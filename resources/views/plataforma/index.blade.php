@@ -51,43 +51,10 @@
 
                 </div>
             </div>
-            <div>
-                <h3>Graficas</h3>
-                <canvas id="myChart" style="display:block;width:100%; height:600px"></canvas>
-            </div>
+
         </div>
     </section>
 @endsection
 
 
-@section('scripts')
 
-
-    <script>
-        $(document).ready(function() {
-            const cData = JSON.parse(`<?php echo $data_json; ?>`)
-            console.log(cData);
-            const ctx = document.getElementById('myChart')
-
-            const myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: cData.label,
-                    datasets: [{
-                        label: '# of Votes',
-                        data: cData.data,
-                        borderWidth: 1,
-                        backgroundColor: 'rgba(54,162,235,1)'
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            })
-        });
-    </script>
-@endsection

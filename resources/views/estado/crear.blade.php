@@ -27,12 +27,13 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
-                                        <label for="plataforma">Selecciona un cliente</label>
+                                        <label for="plataforma_id">Selecciona un cliente</label>
                                         {!! Form::select('cliente_id', $clientes, null, [
                                             'class' => 'form-control',
                                             'id' => 'cliente_id',
+                                            'onchange' => 'actualizarPlataformas(this.value)', 
+                                            'placeholder' => 'Selecciona un cliente'
                                         ]) !!}
-
                                     </div>
                                 </div>
 
@@ -72,3 +73,19 @@
             </div>
     </section>
 @endsection
+<script>
+    function actualizarPlataformas(clienteId) {
+        var opcionesPlataforma = document.querySelectorAll('#plataforma_id option');
+        for (var i = 0; i < opcionesPlataforma.length; i++) {
+            var opcion = opcionesPlataforma[i];
+            if (opcion.value != 'null' && opcion.getAttribute('data-cliente-id') != clienteId) {
+                opcion.style.display = 'none';
+            } else {
+                opcion.style.display = 'block';
+            }
+        }
+    }
+</script>
+
+
+

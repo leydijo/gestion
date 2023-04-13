@@ -16,7 +16,7 @@ class Plataforma extends Model
 
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class,'id');
+        return $this->belongsTo(Cliente::class);
     }
     public function problemas()
     {

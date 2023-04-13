@@ -15,6 +15,11 @@
         <i class=" fas fa-blog"></i><span>Clientes</span>
     </a>
     <a class="nav-link" href="{{ url('/problemas') }}">
-        <i class=" fas fa-blog"></i><span>Problemas</span>
+        <i class=" fas fa-blog"></i><span>Problemas y solicitudes</span>
     </a>
+
+    <a class="nav-link" href="{{ url('/estados') }}">
+        <i class=" fas fa-blog"></i><span>Estado plataformas</span>
+    </a>
+
 </li>

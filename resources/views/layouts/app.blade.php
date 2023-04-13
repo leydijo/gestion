@@ -14,7 +14,16 @@
     <link href="{{ asset('assets/css/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="//cdn.jsdelivr.net/npm/chart.js" >
+<style>
+    .modal-backdrop{
+        position:unset;
+    }
 
+    .modal-lg, .modal-xl {
+        max-width: 1000px;
+    }
+
+</style>
    
 @yield('page_css')
 <!-- Template CSS -->
