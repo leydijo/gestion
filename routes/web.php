@@ -20,7 +20,7 @@ use App\Http\Controllers\EstadoController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Route::redirect('/', '/login');
+Route::redirect('/', '/login');
 Route::get('/login', function () {
     return view('auth.login');
 });
