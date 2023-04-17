@@ -39,12 +39,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <div class="form-group">
-                                        <label for="plataforma">Subir Imagen</label>
-                                        {!! Form::file('img_error', null, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
+
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label for="plataforma_id">Plataforma:</label>
@@ -67,6 +62,12 @@
                                         <div class="form-group">
                                             <label for="descripcion">Descripcion</label>
                                             {!! Form::textarea('descripcion', null, ['class' => 'form-control']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="plataforma">Subir Imagen</label>
+                                            {!! Form::file('img_error', null, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12">

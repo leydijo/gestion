@@ -50,7 +50,7 @@
                                                         </button>
                                                         <button type="button" class="btn btn-warning" data-toggle="modal"
                                                             data-target="#modModal{{ $problem->id }}">
-                                                            Editar
+                                                            Ver o Editar
                                                         </button>
     
                                                         {!! Form::open([
@@ -146,7 +146,7 @@
                                                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                                                             <div class="form-group">
                                                                                 <label for="descripcion">Evidencia</label>
-                                                                                <img src="{{ asset('storage') . '/' . $problem->img_error }}" width="75%">
+                                                                                <img src="{{ asset('storage') . '/' . $problem->img_error }}" width="50%">
     
                                                                             </div>
                                                                         </div>

@@ -12,15 +12,17 @@
                         <a class="btn btn-warning" href="{{ route('clientes.create') }}">Nuevo</a>
                         <table class="table table-striped mt-2">
                             <thead style="background-color:#6777ef">
-                                <th style="color:#fff;">ID</th>
+                                
                                 <th style="color:#fff;">Nombre</th>
+                              
                                 <th style="color:#fff;">Acciones</th>
                             </thead>
                             <tbody>
                                 @foreach ($clientes as $cliente)
                                     <tr>
-                                        <td>{{ $cliente->id }}</td>
+                                        
                                         <td>{{ $cliente->nombre }}</td>
+                                     
                                         
                                         <td>
 

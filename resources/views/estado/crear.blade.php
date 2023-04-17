@@ -60,7 +60,7 @@
 
                                         </div>
                                     </div>
-
+                                    <input type="hidden" name="creado_por" value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                         <button type="submit" class="btn btn-primary">Guardar</button>
                                     </div>

@@ -26,8 +26,8 @@
 
                                     @foreach ($plataformas as $plataforma)
                                         <tr>
-                                            
-                                            <td>{{ auth()->user()->name() }}</td>
+                                                                                     
+                                            <td>{{ $plataforma->creado_por }}</td>
                                             <td>{{ $plataforma->plataforma->nombre }}</td>
                                             <td>{{ $plataforma->cliente->nombre }}</td>
                                             <td>{{ $plataforma->estado->nombre }}</td>

@@ -13,7 +13,7 @@ class EstadoPlataforma extends Model
     use HasFactory;
     protected $fillable = [
         'id', 'estado_id','plataforma_id',
-        'cliente_id','updated_at','created_at'
+        'cliente_id','updated_at','created_at', 'creado_por'
     ];
 
     public function estado()

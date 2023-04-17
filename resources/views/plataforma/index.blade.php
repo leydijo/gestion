@@ -10,21 +10,24 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            
                             <a class="btn btn-warning" href="{{ route('plataformas.create') }}">Nuevo</a>
 
                             <table class="table table-striped mt-2">
                                 <thead style="background-color:#6777ef">
-                                    <th style="color:#fff;">ID</th>
+                                <th style="color:#fff;">Cliente</th>
                                     <th style="color:#fff;">Nombre</th>
-                                    <th style="color:#fff;">Cliente</th>
+                                    <th style="color:#fff;">URL</th>
+                                    
                                     <th style="color:#fff;">Acciones</th>
                                 </thead>
                                 <tbody>
                                     @foreach ($plataformas as $plt)
                                         <tr>
-                                            <td>{{ $plt->id }}</td>
-                                            <td>{{ $plt->nombre }}</td>
                                             <td>{{ $plt->cliente->nombre }}</td>
+                                            <td>{{ $plt->nombre }}</td>
+                                            <td>{{ $plt->url }}</td>
+                                            
 
                                             <td>
 

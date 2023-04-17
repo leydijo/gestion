@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Problema;
 use App\Models\Cliente;
 use App\Models\Plataforma;
 use App\Models\EstadoPlataforma;
 use App\Models\Estado;
+
 
 class EstadoController extends Controller
 {
@@ -27,8 +29,12 @@ class EstadoController extends Controller
     public function index()
     {
 
-        $plataformas = EstadoPlataforma::with('plataforma','cliente','estado')->paginate(10);
-        return view('estado.index',compact('plataformas'));
+        $plataformas = EstadoPlataforma::with('plataforma','cliente','estado')
+                ->orderByDesc('fecha_creacion')
+                ->paginate(50);
+        $estados = Estado::all();
+        return view('estado.index', compact('plataformas', 'estados'));
+                
     }
 
     /**
@@ -53,17 +59,27 @@ class EstadoController extends Controller
      */
     public function store(Request $request)
     {
+        $usuario = Auth::user();
+        
         request()->validate([
             'cliente_id' => 'required',
             'plataforma_id' => 'required',
             'estado_id' => 'required'
-           
         ]);
-        //dd($request->all());
-        EstadoPlataforma::create($request->all());
+    
+        $estadoPlataforma = new EstadoPlataforma([
+            'cliente_id' => $request->get('cliente_id'),
+            'plataforma_id' => $request->get('plataforma_id'),
+            'estado_id' => $request->get('estado_id'),
+            'creado_por' => $usuario->name // o $usuario->email, dependiendo de cómo tengas configurado el modelo User
+        ]);
+        $estadoPlataforma->save();
     
         return redirect()->route('estados.index');
     }
+    
+    
+    
 
     /**
      * Display the specified resource.
@@ -97,6 +113,14 @@ class EstadoController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $plataforma = Plataforma::findOrFail($id);
+        $plataforma->estado_id = $request->input('estado');
+        $plataforma->save();
+
+        return back()->with('success', 'Estado actualizado correctamente.');
+        
+
     }
 
     /**
@@ -109,4 +133,8 @@ class EstadoController extends Controller
     {
         //
     }
+
+
+    
+
 }

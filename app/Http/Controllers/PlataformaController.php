@@ -22,7 +22,7 @@ class PlataformaController extends Controller
      */
     public function index()
     {
-        $plataformas = Plataforma::with('cliente')->paginate(5);
+        $plataformas = Plataforma::with('cliente')->paginate(50);
         $envios = Plataforma::all();
         $data=[];
 

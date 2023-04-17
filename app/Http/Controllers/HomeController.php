@@ -78,16 +78,10 @@ class HomeController extends Controller
                       ->whereRaw('e2.plataforma_id = ep.plataforma_id');
             });
         })
+        ->where('ep.fecha_creacion', '>', now()->subDays(2)) // Agregamos la condición para los últimos dos días
         ->orderBy('ep.fecha_creacion', 'desc')
         ->get();
 
-    
-
-        
-    
-    
-    
-    
             return view('home', [
                 'data_json' => $data_json,
                 'data_json2' => $data_json2,

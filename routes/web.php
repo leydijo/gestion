@@ -41,5 +41,4 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('plataformas', PlataformaController::class);
     Route::resource('problemas', ProblemaController::class);
     Route::resource('estados', EstadoController::class);
-
 });

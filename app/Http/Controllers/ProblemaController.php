@@ -26,7 +26,9 @@ class ProblemaController extends Controller
     public function index()
     {
         
-        $problems = Problema::with(['plataforma','cliente'])->paginate(10);
+        $problems = Problema::with(['plataforma','cliente'])
+                ->orderByDesc('fecha_creacion')
+                ->paginate(50);
      
 
         // $topProblemas = Problema::select('problemas.id', 'problemas.descripcion', 'plataformas.nombre AS plataforma', 'clientes.nombre AS cliente', DB::raw('COUNT(problemas.id) AS total'))
