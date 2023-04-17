@@ -20,7 +20,7 @@ use App\Http\Controllers\EstadoController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Route::redirect('/', '/login');
+Route::redirect('/', '/login');
 Route::get('/login', function () {
     return view('auth.login');
 });
@@ -41,4 +41,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('plataformas', PlataformaController::class);
     Route::resource('problemas', ProblemaController::class);
     Route::resource('estados', EstadoController::class);
+
 });
